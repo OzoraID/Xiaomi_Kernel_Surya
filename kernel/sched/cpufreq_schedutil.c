@@ -152,6 +152,10 @@ static bool sugov_update_next_freq(struct sugov_policy *sg_policy, u64 time,
 		  sugov_should_rate_limit(sg_policy, time)))
 		return false;
 
+	if (sg_policy->next_freq > next_freq &&
+	    sg_policy->next_freq != UINT_MAX)
+		next_freq = (sg_policy->next_freq + next_freq) >> 1;
+
 	sg_policy->next_freq = next_freq;
 	sg_policy->last_freq_update_time = time;
 
