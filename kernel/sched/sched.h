@@ -1549,7 +1549,11 @@ static inline void __set_task_cpu(struct task_struct *p, unsigned int cpu)
 #endif
 }
 
+#ifdef CONFIG_SCHED_DEBUG
 #define const_debug __read_mostly
+#else
+# define const_debug const
+#endif
 
 #define sched_feat(x) SCHED_FEAT_##x
 
