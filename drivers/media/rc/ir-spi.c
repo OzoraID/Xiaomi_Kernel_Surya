@@ -24,7 +24,8 @@
 #define IR_SPI_PULSE_DC_90		0x8000
 
 #define IR_SPI_DEFAULT_FREQUENCY	38000
-#define IR_SPI_BIT_PER_WORD		    8
+#define IR_SPI_BIT_PER_WORD		8
+#define IR_SPI_BITS_PER_PULSE		16
 
 struct ir_spi_data {
 	u32 freq;
@@ -76,7 +77,7 @@ static int ir_spi_tx(struct rc_dev *dev,
 
 	memset(&xfer, 0, sizeof(xfer));
 
-	xfer.speed_hz = idata->freq * 16;
+	xfer.speed_hz = idata->freq * IR_SPI_BITS_PER_PULSE;
 	xfer.len = len * sizeof(*tx_buf);
 	xfer.tx_buf = tx_buf;
 
@@ -102,6 +103,9 @@ static int ir_spi_set_tx_carrier(struct rc_dev *dev, u32 carrier)
 	struct ir_spi_data *idata = dev->priv;
 
 	if (!carrier)
+		return -EINVAL;
+
+	if (carrier > idata->spi->max_speed_hz / IR_SPI_BITS_PER_PULSE)
 		return -EINVAL;
 
 	idata->freq = carrier;
