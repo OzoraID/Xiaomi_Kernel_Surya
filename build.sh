@@ -19,10 +19,10 @@ setup() {
     if ! [ -d "${CLANG_DIR}" ]; then
         echo "Clang not found! Downloading Google prebuilt..."
         mkdir -p "${CLANG_DIR}"
-        wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/0998f421320ae02fddabec8a78b91bf7620159f6/clang-r563880.tar.gz -O clang.tar.gz
+        wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/167e11df8c330bced88cdf5808f61f41d9eab330/clang-r584948.tar.gz -O clang.tar.gz
         if [ $? -ne 0 ]; then
             echo "Download failed! Aborting..."
-            exit 1
+            return 1
         fi
         echo "Extracting clang to ${CLANG_DIR}..."
         tar -xf clang.tar.gz -C "${CLANG_DIR}"
@@ -33,7 +33,7 @@ setup() {
         echo "gcc not found! Cloning to ${ARCH_DIR}..."
         if ! git clone --depth=1 -b lineage-19.1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git ${ARCH_DIR}; then
             echo "Cloning failed! Aborting..."
-            exit 1
+            return 1
         fi
     fi
 
@@ -41,7 +41,7 @@ setup() {
         echo "gcc_32 not found! Cloning to ${ARM_DIR}..."
         if ! git clone --depth=1 -b lineage-19.1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git ${ARM_DIR}; then
             echo "Cloning failed! Aborting..."
-            exit 1
+            return 1
         fi
     fi
 }
@@ -60,7 +60,7 @@ clean_build() {
             echo "Successfully removed old build output."
         else
             echo "Error: Failed to remove build output from ${objdir}."
-            exit 1
+            return 1
         fi
     else
         echo "No previous build output found, skipping removal."
@@ -74,7 +74,7 @@ clean_build() {
             echo "'make mrproper' completed successfully."
         else
             echo "Error: 'make mrproper' failed."
-            exit 1
+            return 1
         fi
     else
         echo "No existing .config file found, skipping 'make mrproper'."
@@ -147,7 +147,7 @@ completion() {
         echo "## Please check the build log for errors. ##"
         echo "############################################"
         echo ""
-        exit 1
+        return 1
     fi
 }
 

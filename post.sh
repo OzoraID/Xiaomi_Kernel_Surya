@@ -13,7 +13,7 @@ KERNEL_DTB="$KERNEL_DIR/out/arch/arm64/boot/dtb.img"
 KBUILD_COMPILER_STRING=$(${HOME}/../toolchain/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 AK3_DIR="$KERNEL_DIR/AK3"
 PHONE="Poco X3 NFC"
-DEVICE="vayu"
+DEVICE="surya"
 CHAT_ID="-1002377006405"
 TOKEN="7634058501:AAH3Wdk16hD50nACQM8JfgJhVRdwQKMkK1o"
 
@@ -29,7 +29,7 @@ function copy() {
             echo -e ""
             echo -e " Image/dtb/dtbo is missing!"
             echo -e ""
-            exit 1
+            return 1
         fi
     done
 }
@@ -39,7 +39,7 @@ function main() {
     echo -e " Done..."
     echo -e ""
     echo -e " Create ZIP..."
-    cd "$AK3_DIR" || exit
+    cd "$AK3_DIR" || return
     ZIP_NAME="${NAME_KERNEL}_${DEVICE}_$(date +'%d%m%Y_%H%M').zip"
     zip -r9 "$ZIP_NAME" ./*
     echo  -e " Sukses!!!  "
@@ -70,7 +70,7 @@ push() {
     # Cek apakah file ZIP ada
     if [ ! -f "$AK3_DIR/$ZIP_NAME" ]; then
         echo "File $AK3_DIR/$ZIP_NAME tidak ditemukan!"
-        exit 1
+        return 1
     fi
 
     # Kirim file ke Telegram menggunakan curl
