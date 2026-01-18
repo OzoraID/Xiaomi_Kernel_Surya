@@ -229,8 +229,4 @@ source "drivers/esoc/Kconfig"
 
 source "drivers/kernelsu/Kconfig"
 
-comment "Lindroid DRM Loopback Driver"
-
-source "drivers/lindroid-drm-loopback/Kconfig"
-
 endmenu
