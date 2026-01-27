@@ -3,7 +3,7 @@
 
 HOME="${PWD}"
 KERNEL_NAME="Kurumi Kernel"
-NAME_KERNEL="Kurumi+"
+NAME_KERNEL="Kurumi-iLuminate"
 BASE="Rebase"
 ANDROID="11-16"
 KERNEL_DIR="$PWD"
