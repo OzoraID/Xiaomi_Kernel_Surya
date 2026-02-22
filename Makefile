@@ -758,7 +758,7 @@ KBUILD_LDFLAGS  += -Os
 else
 ifeq ($(cc-name),clang)
 KBUILD_CFLAGS   += -mllvm -hot-cold-split=true
-KBUILD_CFLAGS   += -mcpu=cortex-a55 -mtune=cortex-a55
+KBUILD_CFLAGS   += -mcpu=cortex-a76+crypto -mtune=cortex-a76
 KBUILD_CFLAGS   += -O3 -march=armv8.2-a+lse+crypto+dotprod+crc --cuda-path=/dev/null
 KBUILD_AFLAGS   += -O3 -march=armv8.2-a+lse+crypto+dotprod+crc
 KBUILD_LDFLAGS  += -O3 --plugin-opt=O3
