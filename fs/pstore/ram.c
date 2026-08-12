@@ -369,8 +369,6 @@ static size_t ramoops_write_kmsg_hdr(struct persistent_ram_zone *prz,
 
 	len = scnprintf(hdr, sizeof(hdr),
 		RAMOOPS_KERNMSG_HDR "%lu.%lu-%c\n",
-
-	hdr = kasprintf(GFP_ATOMIC, RAMOOPS_KERNMSG_HDR TVSEC_FMT ".%lu-%c\n",
 		record->time.tv_sec,
 		record->time.tv_nsec / 1000,
 		record->compressed ? 'C' : 'D');
